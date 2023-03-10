@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ShutdownGUI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ShutdownGUI_jar</output-path>
+    <root id="archive" name="ShutdownGUI.jar">
+      <element id="module-output" name="ShutdownGUI" />
+    </root>
+  </artifact>
+</component>

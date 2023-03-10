@@ -1,15 +1,20 @@
+package main;
+
+import gui.GUI;
+
 import java.io.IOException;
-import java.util.Arrays;
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
         String path = "C:\\Users\\thudz\\IdeaProjects\\ShutdownGUI\\scripts\\";
         String fileName ="Shutdown.bat";
+        String fileName1 ="Shutdown without admin inbuilt.bat";
 
-        ProcessBuilder builder = new ProcessBuilder(Arrays.asList("cmd.exe", "/C",path+fileName));
-        builder.start();
+        GUI.AppFront();
     }
+
+
 }
 
 
