@@ -14,8 +14,10 @@ import java.io.IOException;
 
 public class GUI{
 
-    public static void AppFront()
-    {
+    public static void AppFront() throws IOException {
+        Scripter scripHandler = new Scripter();
+
+
         //Create a frame
         Frame f = new Frame();
         f.setSize(500, 500);
@@ -26,6 +28,8 @@ public class GUI{
         f.setFont(font);
         //Make visible
         f.setVisible(true);
+
+//        scripHandler.askAdminPermission();
 
         //exit on esc
         f.addKeyListener(new KeyListener() {
@@ -52,13 +56,14 @@ public class GUI{
         button.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                if(e.getClickCount()==2){
-//                    System.out.println("Bitch don't click me");
-//
-//                }
-//                else{
-                    System.exit(0);
-//                }
+                scripHandler.setScriptName("Shutdown without admin inbuilt.bat");
+
+                try {
+                    scripHandler.runScript();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
             }
 
             @Override
@@ -82,9 +87,8 @@ public class GUI{
             }
 
         });
-        button.setFont(font);
+//        button.setFont(font);
         f.add(button);
-
 
         f.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -92,11 +96,5 @@ public class GUI{
             }
         });
     }
-
-    private void onClick() throws IOException {
-        Scripter scripter = new Scripter("","");
-    }
-
-
 
 }

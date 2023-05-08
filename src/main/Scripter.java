@@ -4,14 +4,15 @@ import java.io.IOException;
 
 public class Scripter{
 
-    String pathToScript="";
+    String pathToScript="C:\\Users\\thudz\\IdeaProjects\\ShutdownGUI\\src\\scripts\\";
     String scriptName="";
 
 
-    public Scripter(String path, String fileName) throws IOException {
-        this.pathToScript=path;
-        this.scriptName=fileName;
+    public Scripter() {
+    }
 
+    public void setScriptName(String scriptName){
+        this.scriptName=scriptName;
     }
 
     public void runScript() throws IOException {
@@ -22,6 +23,17 @@ public class Scripter{
 
         builder.start();
     }
+
+    public void askAdminPermission() throws IOException {
+        ProcessBuilder builder = new ProcessBuilder(
+                "cmd.exe",
+                "/C",
+                pathToScript+"Admin Permission.bat");
+
+        builder.start();
+    }
+
+
 
 
 
