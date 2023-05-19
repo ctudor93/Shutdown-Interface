@@ -1,2 +1,2 @@
 shutdown -a
-    shutdown -s -t 3600
+shutdown -s -t 3600

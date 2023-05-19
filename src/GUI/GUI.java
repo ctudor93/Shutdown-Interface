@@ -1,16 +1,19 @@
-package gui;
+package GUI;
 
+import main.Main;
 import main.Scripter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class GUI extends KeyAdapter implements MouseListener {
 
-    public void GUI() throws IOException {
+    public void GUI() {
 
 
         //Create a frame
@@ -44,15 +47,40 @@ public class GUI extends KeyAdapter implements MouseListener {
     }
 
 
-    static Path getScriptDirectoryPath() {
+    static void setPathForScriptDirectory() {
         //Create a file chooser
         final JFileChooser fc = new JFileChooser();
         //In response to a button click:
         fc.setDialogTitle("Choose script directory location");
         fc.setFileSelectionMode(1);
         fc.showOpenDialog(null);
+        String path = (fc.getSelectedFile() != null ? fc.getSelectedFile().toPath() : fc.getCurrentDirectory().toPath()).toString();
 
-        return fc.getSelectedFile() != null ? fc.getSelectedFile().toPath() : fc.getCurrentDirectory().toPath();
+        System.out.println("path selected in viewer"+path);
+
+
+//        Main.writeToConfigTxt("Path",path.toString());
+
+    }
+
+
+
+    public void mouseClicked(MouseEvent e) {
+        Scripter scripHandler = new Scripter();
+        setPathForScriptDirectory();
+
+        //        runScript(scripHandler);
+    }
+
+    private static void runScript(Scripter scriptHandler) {
+//        scriptHandler.setScriptName("Shutdown without admin inbuilt.bat");
+        scriptHandler.setScriptName("Shutdown.bat");
+        System.out.println(scriptHandler.getScriptName() + " " + scriptHandler.getScriptPath());
+        try {
+            scriptHandler.runScript();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
 
     }
 
@@ -62,25 +90,6 @@ public class GUI extends KeyAdapter implements MouseListener {
         //close on ESC key
         if (keyCode == KeyEvent.VK_ESCAPE) {
             System.exit(0);
-        }
-
-    }
-
-    public void mouseClicked(MouseEvent e) {
-        Scripter scripHandler = new Scripter();
-        runScript(scripHandler);
-
-//        getScriptDirectoryPath();
-    }
-
-    private static void runScript(Scripter scriptHandler) {
-        scriptHandler.setScriptName("Shutdown without admin inbuilt.bat");
-//        scriptHandler.setScriptName("Shutdown.bat");
-
-        try {
-            scriptHandler.runScript();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
         }
 
     }
