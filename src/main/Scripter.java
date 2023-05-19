@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Scripter{
 
-    String pathToScript="C:\\Users\\thudz\\IdeaProjects\\ShutdownGUI\\src\\scripts\\";
+    String pathToScript="C:\\Users\\Tudor\\Documents\\projects\\Shutdown-Interface\\src\\Scripts\\";
     String scriptName="";
 
 
