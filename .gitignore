@@ -1,5 +1,6 @@
 ### IntelliJ IDEA ###
 out/
+Config/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
