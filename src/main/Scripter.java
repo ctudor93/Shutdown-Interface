@@ -1,8 +1,6 @@
 package main;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Scripter {
 
@@ -10,10 +8,9 @@ public class Scripter {
 
     String scriptName = "";
 
-
     public Scripter() {
 
-        this.pathToScripts = Main.matchRegex(Main.readConfig().get(0),"(\").*?(\")" );
+        this.pathToScripts = ConfigHandler.matchRegex(ConfigHandler.readConfig().get(0), "(\").*?(\")");
         System.out.println("Path to scripts as found in scripter " + pathToScripts);
     }
 
@@ -42,7 +39,6 @@ public class Scripter {
 
         builder.start();
     }
-
 
     public String getScriptName() {
         return scriptName;

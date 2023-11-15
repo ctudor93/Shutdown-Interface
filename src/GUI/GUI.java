@@ -1,5 +1,6 @@
 package GUI;
 
+import main.ConfigHandler;
 import main.Main;
 import main.Scripter;
 
@@ -13,10 +14,11 @@ import java.util.List;
 
 public class GUI extends KeyAdapter implements MouseListener {
 
-    public void GUI() {
+    boolean pathHasBeenSet = false;
 
+    public void guiMain() {
 
-        //Create a frame
+        // Create a frame
         Frame f = new Frame();
         f.requestFocus();
         f.setSize(500, 500);
@@ -26,9 +28,9 @@ public class GUI extends KeyAdapter implements MouseListener {
         f.setFont(font);
         f.setVisible(true);
 
-//        scripHandler.askAdminPermission();
+        // scripHandler.askAdminPermission();
 
-        //exit on esc
+        // exit on esc
         f.addKeyListener(this);
 
         Button button = new Button();
@@ -46,36 +48,34 @@ public class GUI extends KeyAdapter implements MouseListener {
         });
     }
 
-
     static void setPathForScriptDirectory() {
-        //Create a file chooser
+        // Create a file chooser
         final JFileChooser fc = new JFileChooser();
-        //In response to a button click:
+        // In response to a button click:
         fc.setDialogTitle("Choose script directory location");
         fc.setFileSelectionMode(1);
         fc.showOpenDialog(null);
-        String path = (fc.getSelectedFile() != null ? fc.getSelectedFile().toPath() : fc.getCurrentDirectory().toPath()).toString();
+        String path = (fc.getSelectedFile() != null ? fc.getSelectedFile().toPath() : fc.getCurrentDirectory().toPath())
+                .toString();
 
-        System.out.println("path selected in viewer"+path);
+        System.out.println("path selected in viewer " + path);
 
-
-//        Main.writeToConfigTxt("Path",path.toString());
+        ConfigHandler.writeToConfigTxt("Path", path);
 
     }
-
-
 
     public void mouseClicked(MouseEvent e) {
         Scripter scripHandler = new Scripter();
         setPathForScriptDirectory();
 
-        //        runScript(scripHandler);
+        runScript(scripHandler);
     }
 
     private static void runScript(Scripter scriptHandler) {
-//        scriptHandler.setScriptName("Shutdown without admin inbuilt.bat");
+        // scriptHandler.setScriptName("Shutdown without admin inbuilt.bat");
         scriptHandler.setScriptName("Shutdown.bat");
-        System.out.println(scriptHandler.getScriptName() + " " + scriptHandler.getScriptPath());
+        // System.out.println("This is script name in runScript()
+        // "+scriptHandler.getScriptName() + " " + scriptHandler.getScriptPath());
         try {
             scriptHandler.runScript();
         } catch (IOException ex) {
@@ -87,13 +87,12 @@ public class GUI extends KeyAdapter implements MouseListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        //close on ESC key
+        // close on ESC key
         if (keyCode == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         }
 
     }
-
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -114,6 +113,5 @@ public class GUI extends KeyAdapter implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
 
 }
