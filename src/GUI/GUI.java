@@ -1,16 +1,13 @@
 package GUI;
 
 import main.ConfigHandler;
-import main.Main;
 import main.Scripter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.List;
 
 public class GUI extends KeyAdapter implements MouseListener {
 
@@ -58,24 +55,53 @@ public class GUI extends KeyAdapter implements MouseListener {
         String path = (fc.getSelectedFile() != null ? fc.getSelectedFile().toPath() : fc.getCurrentDirectory().toPath())
                 .toString();
 
-        System.out.println("path selected in viewer " + path);
+        // System.out.println("path selected in viewer " + path);
 
         ConfigHandler.writeToConfigTxt("Path", path);
 
     }
 
     public void mouseClicked(MouseEvent e) {
-        Scripter scripHandler = new Scripter();
-        setPathForScriptDirectory();
+        if (!pathHasBeenSet) {
+            setPathForScriptDirectory();
+            pathHasBeenSet = true;
+        }
 
-        runScript(scripHandler);
+        Scripter scripHandler = new Scripter();
+        if (folderHasScripts(scripHandler.getScriptPath())) {
+            runScript(scripHandler);
+        } else
+            System.out.println("no scripts bby");
+    }
+
+    private boolean folderHasScripts(String pathToScripts) {
+
+        File folder = new File(pathToScripts);
+
+        if (folder.exists() && folder.isDirectory()) {
+            File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".bat"));
+
+            if (files != null && files.length > 0) {
+                System.out.println("The folder contains .bat files:");
+                return true;
+
+            } else {
+                System.out.println("The folder does not contain any .bat files.");
+            }
+        } else {
+            System.out.println("The specified folder does not exist or is not a directory.");
+        }
+
+        return false;
     }
 
     private static void runScript(Scripter scriptHandler) {
         // scriptHandler.setScriptName("Shutdown without admin inbuilt.bat");
         scriptHandler.setScriptName("Shutdown.bat");
+
         // System.out.println("This is script name in runScript()
         // "+scriptHandler.getScriptName() + " " + scriptHandler.getScriptPath());
+
         try {
             scriptHandler.runScript();
         } catch (IOException ex) {

@@ -2,6 +2,8 @@ package main;
 
 import java.io.IOException;
 
+// (?<=\")([^\"]*)(?=\") regex for everything between quotes 
+
 public class Scripter {
 
     String pathToScripts = "";
@@ -10,8 +12,9 @@ public class Scripter {
 
     public Scripter() {
 
-        this.pathToScripts = ConfigHandler.matchRegex(ConfigHandler.readConfig().get(0), "(\").*?(\")");
-        System.out.println("Path to scripts as found in scripter " + pathToScripts);
+        this.pathToScripts = ConfigHandler.matchRegex(
+                ConfigHandler.readConfig().get(ConfigHandler.findLineForGivenOption("Path")),
+                "(?<=\\\")([^\\\"]*)(?=\\\")");
     }
 
     public void setScriptName(String scriptName) {
@@ -26,8 +29,7 @@ public class Scripter {
         ProcessBuilder builder = new ProcessBuilder(
                 "cmd.exe",
                 "/C",
-                pathToScripts + scriptName);
-
+                pathToScripts + "\\" + scriptName);
         builder.start();
     }
 

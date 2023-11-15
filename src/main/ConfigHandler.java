@@ -13,25 +13,22 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// (?<=\").*?(?=\") regex for anything between ""
-//     (").*?(") better
-
 public class ConfigHandler {
 
+
+    static File configFile = new File(Paths.get("").toAbsolutePath() + "\\src\\Config\\Config.txt");
+
+
     public static void writeToConfigTxt(String option, String stringToReplaceWith) {
-
-        System.out.println("received string in writeToConfigTxt " + stringToReplaceWith + " option " + option);
-
-        String configFilePath = Paths.get("").toAbsolutePath() + "\\src\\Config\\Config.txt";
         List<String> fileAsList = readConfig();
-
-        int lineInList = findLineForGivenOption(fileAsList, option);
+        
+        int lineInList = findLineForGivenOption(option);
 
         fileAsList.set(lineInList, option + " = \"" + stringToReplaceWith + "\"");
 
         // rewrite config file with new updated information
         try {
-            Files.write(Paths.get(configFilePath), fileAsList);
+            Files.write(configFile.toPath(), fileAsList);
         } catch (IOException e) {
             System.out.println("Problem reading or writing the file: " + e.getMessage());
         }
@@ -40,9 +37,10 @@ public class ConfigHandler {
 
     // scan through list of lines from config file to find the line of the given
     // option to be changed
-    public static int findLineForGivenOption(List<String> fileAsList, String option) {
-        for (int i = 0; i < fileAsList.size(); i++) {
-            if (fileAsList.get(i).contains(option))
+    public static int findLineForGivenOption( String option) {
+
+        for (int i = 0; i < readConfig().size(); i++) {
+            if (readConfig().get(i).contains(option))
                 return i;
         }
 
@@ -54,8 +52,6 @@ public class ConfigHandler {
     public static List<String> readConfig() {
 
         List<String> configs = new ArrayList();
-        Path currentRelativePath = Paths.get("");
-        File configFile = new File(currentRelativePath.toAbsolutePath() + "\\src\\Config\\Config.txt");
 
         try {
             try (Scanner sc = new Scanner(configFile)) {
@@ -71,7 +67,7 @@ public class ConfigHandler {
             throw new RuntimeException(e);
         }
 
-        System.out.println("this is readConfig() " + configs.toString());
+        // System.out.println("this is readConfig() " + configs.toString());
         return configs;
     }
 
