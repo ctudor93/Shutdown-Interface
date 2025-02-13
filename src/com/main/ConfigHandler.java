@@ -1,11 +1,9 @@
-package main;
+package com.main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.regex.Pattern;
 public class ConfigHandler {
 
 
-    static File configFile = new File(Paths.get("").toAbsolutePath() + "\\src\\Config\\Config.txt");
+    static File configFile = new File(Paths.get("").toAbsolutePath() + "\\src\\com\\Config\\Config.txt");
 
 
     public static void writeToConfigTxt(String option, String stringToReplaceWith) {
@@ -51,8 +49,7 @@ public class ConfigHandler {
 
     public static List<String> readConfig() {
 
-        List<String> configs = new ArrayList();
-
+        List<String> configs= new ArrayList<>();
         try {
             try (Scanner sc = new Scanner(configFile)) {
                 while (sc.hasNextLine()) {

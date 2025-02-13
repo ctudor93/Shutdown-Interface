@@ -1,6 +1,8 @@
-package main;
+package com.main;
 
-import GUI.GUI;
+import java.util.ArrayList;
+
+import com.GUI.Gui;
 
 public class Main {
 
@@ -11,8 +13,8 @@ public class Main {
         // firstTimeOpening = false;
         // }
         //
-
-        GUI gui = new GUI();
+        
+        Gui gui = new Gui();
         gui.guiMain();
 
     }

@@ -1,0 +1,4 @@
+Language = ""
+Path = "C:\Users\Tudor\Documents\projects\Shutdown-Interface\src\com\Scripts"
+Font = "15"
+Size = "5"
